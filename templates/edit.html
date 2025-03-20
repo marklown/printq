@@ -1,0 +1,31 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<h1>{% block title %} Edit print request {% endblock %}</h1>
+
+<form method="post">
+  <div class="form-group">
+    <label for="title">What do you want to print?</label>
+    <input type="text" name="job" placeholder="link or description" class="form-control"
+      value="{{ request.form['job'] or job.job }}"></input>
+  </div>
+  <div class="form-group">
+    <label for="content">What type and color of filament?</label>
+    <input type="text" name="color" placeholder="black PLA" class="form-control"
+      value="{{ request.form['color'] or job.color }}"></input>
+  </div>
+  <div class="form-group">
+    <label for="content">Who's it for?</label>
+    <input type="text" name="submitted_by" placeholder="" class="form-control"
+      value="{{ request.form['submitted_by'] or job.submitted_by }}"></input>
+  </div>
+  <div class="form-group">
+    <label for="content">Any additional comments/instructions?</label>
+    <input type="text" name="comments" placeholder="" class="form-control"
+      value="{{ request.form['comments'] or job.comments }}"></input>
+  </div>
+  <div class="form-group">
+    <button type="submit" class="btn btn-primary">Update</button>
+  </div>
+</form>
+{% endblock %}

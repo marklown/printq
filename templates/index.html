@@ -1,0 +1,36 @@
+{% extends 'base.html' %}
+
+{% block content %}
+    <h1>{% block title %} 3D Print Queue {% endblock %}</h1>
+    <a href="{{ url_for('add') }}" class="btn btn-primary"><h2>Add Print</h2></a>
+    <div class="row mb-5"></div>
+    {% for job in jobs %}
+      {% if not job.completed and not job.deleted %}
+        <div class="row">
+          <div class="col-md-6">
+            <a href="{{ job['job'] }}">
+              <h4>{{ job['job'] }}</h4> 
+            </a>
+            <span class="badge badge-primary">{{ job['created'] }}</span>
+            <span class="badge badge-secondary">{{ job['submitted_by'] }}</span>
+            <span class="badge badge-info">{{ job['color'] }}</span>
+          </div>
+          <div class="col-md-6">
+            <div class="row">
+              <form action="{{ url_for('complete', job_id=job.id) }}" method="POST">
+                <input class="btn btn-success" type="submit" value="Complete">
+              </form>
+              <form action="{{ url_for('delete', job_id=job.id) }}" method="POST">
+                <input class="btn btn-danger" type="submit" value="Delete">
+              </form>
+              <a href="{{ url_for('edit', job_id=job.id) }}" class="btn btn-secondary">Edit</a>
+            </div>  
+          </div>
+        </div>
+        <div class="mt-2">
+          <p>{{ job['comments'] }}</p>
+        </div>
+        <hr>
+      {% endif %}
+    {% endfor %}
+{% endblock %}

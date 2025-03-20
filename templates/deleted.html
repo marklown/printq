@@ -1,0 +1,30 @@
+{% extends 'base.html' %}
+
+{% block content %}
+    <h1>{% block title %} Deleted Items {% endblock %}</h1>
+    <div class="row mb-5"></div>
+    {% for job in jobs %}
+      {% if job.deleted and not job.completed %}
+        <div class="row">
+          <div class="col-md-6">
+            <a href="{{ job['job'] }}">
+              <h4>{{ job['job'] }}</h4> 
+            </a>
+            <span class="badge badge-primary">{{ job['created'] }}</span>
+            <span class="badge badge-secondary">{{ job['submitted_by'] }}</span>
+            <span class="badge badge-info">{{ job['color'] }}</span>
+          </div>
+          <div class="col-md-6">
+            <span>Deleted on: {{ job['deleted_on'] }}</span>
+            <form action="{{ url_for('revert', job_id=job.id) }}" method="POST">
+              <input class="btn btn-warning" type="submit" value="Revert">
+            </form>
+          </div>
+        </div>
+        <div class="mt-2">
+          <p>{{ job['comments'] }}</p>
+        </div>
+        <hr>
+      {% endif %}
+    {% endfor %}
+{% endblock %}
